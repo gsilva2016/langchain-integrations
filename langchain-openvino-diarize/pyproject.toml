@@ -3,9 +3,9 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
-name = "langchain-openvino-asr"
+name = "langchain-openvino-diarize"
 version = "0.1.0"
-description = "An integration package connecting OpenVINOASR and LangChain"
+description = "An integration package connecting OpenVINOSpeechDiarize and LangChain"
 authors = []
 readme = "README.md"
 repository = "https://github.com/langchain-ai/langchain"
@@ -15,18 +15,24 @@ license = "MIT"
 disallow_untyped_defs = "True"
 
 [tool.poetry.urls]
-"Source Code" = "https://github.com/langchain-ai/langchain/tree/master/libs/partners/openvino-asr"
-"Release Notes" = "https://github.com/langchain-ai/langchain/releases?q=tag%3A%22openvino-asr%3D%3D0%22&expanded=true"
+"Source Code" = "https://github.com/langchain-ai/langchain/tree/master/libs/partners/openvino-diarize"
+"Release Notes" = "https://github.com/langchain-ai/langchain/releases?q=tag%3A%22openvino-diarize%3D%3D0%22&expanded=true"
 
 [tool.poetry.dependencies]
 python = ">=3.9,<4.0"
 langchain-core = "^0.3.15"
-optimum = {version = "1.24.0", extras = ["openvino", "nncf"]}
-langchain-huggingface = "0.1.2"
+langchain-huggingface = "^0.1.2"
+optimum = {extras = ["nncf", "openvino"], version = "^1.24.0"}
+huggingface-hub = "<=0.25.0"
+numpy = "<2.0"
+pytorch-lightning = "2.5.1"
 python-multipart = "^0.0.20"
 fastapi = "^0.115.12"
 uvicorn = "^0.34.0"
 requests = "^2.32.3"
+pyannote-audio = "3.1"
+lightning-fabric = "^2.5.1"
+torch = "<2.6.0"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "T201"]

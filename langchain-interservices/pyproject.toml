@@ -3,9 +3,9 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
-name = "langchain-openvino-asr"
+name = "langchain-interservices"
 version = "0.1.0"
-description = "An integration package connecting OpenVINOASR and LangChain"
+description = "An integration package connecting inter-services and LangChain"
 authors = []
 readme = "README.md"
 repository = "https://github.com/langchain-ai/langchain"
@@ -15,18 +15,15 @@ license = "MIT"
 disallow_untyped_defs = "True"
 
 [tool.poetry.urls]
-"Source Code" = "https://github.com/langchain-ai/langchain/tree/master/libs/partners/openvino-asr"
-"Release Notes" = "https://github.com/langchain-ai/langchain/releases?q=tag%3A%22openvino-asr%3D%3D0%22&expanded=true"
+"Source Code" = "https://github.com/langchain-ai/langchain/tree/master/libs/partners/interservices"
+"Release Notes" = "https://github.com/langchain-ai/langchain/releases?q=tag%3A%22interservices%3D%3D0%22&expanded=true"
 
 [tool.poetry.dependencies]
 python = ">=3.9,<4.0"
 langchain-core = "^0.3.15"
-optimum = {version = "1.24.0", extras = ["openvino", "nncf"]}
-langchain-huggingface = "0.1.2"
-python-multipart = "^0.0.20"
-fastapi = "^0.115.12"
-uvicorn = "^0.34.0"
-requests = "^2.32.3"
+langchain-openvino-asr = {path = "../langchain-openvino-asr/dist/langchain_openvino_asr-0.1.0-py3-none-any.whl"}
+langchain-openvino-diarize = {path = "../langchain-openvino-diarize/dist/langchain_openvino_diarize-0.1.0-py3-none-any.whl"}
+langchain = "^0.3.23"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "T201"]
@@ -47,8 +44,16 @@ optional = true
 [tool.poetry.group.codespell]
 optional = true
 
+[tool.poetry.group.test_integration]
+optional = true
+
 [tool.poetry.group.lint]
 optional = true
+
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
 
 [tool.poetry.group.test.dependencies]
 pytest = "^7.4.3"
@@ -59,6 +64,8 @@ langchain-tests = "^0.3.5"
 
 [tool.poetry.group.codespell.dependencies]
 codespell = "^2.2.6"
+
+[tool.poetry.group.test_integration.dependencies]
 
 [tool.poetry.group.lint.dependencies]
 ruff = "^0.5"
