@@ -1,0 +1,84 @@
+# langchain-summarymerge-score
+
+This package contains the LangChain integration with SummaryMergeScore
+
+## Installation
+
+```bash
+pip install -U langchain-summarymerge-score
+```
+
+And you should configure credentials by setting the following environment variables:
+
+* Set HF_ACCESS_TOKEN via `export HF_ACCESS_TOKEN=<YOUR_ACCESS_TOKEN>`
+
+## Using the tool (SummaryMergeScore) via local endpoint server
+The SummaryMergeScore tool is also available via a local FastAPI server. 
+
+To use the tool via local FastAPI endpoints:
+
+1. Run `python api/app.py` to start the FastAPI server. This starts the server at `http://localhost:800/`
+
+2. The app currently exposes the following endpoint:
+* `POST /merge_summaries` - Merges summaries and assigns anomaly scores to the merged summary.
+
+#### Request Body
+```json
+{
+    "summaries": {
+        "chunk_0": "text1",
+        "chunk_1": "text2",
+        ...
+    }
+}
+```
+
+#### Response Body
+
+```json
+{
+    "overall_summary": "Many strings and summaries",
+    "anomaly_score": 0.7
+}
+```
+
+To see example code of invoking the endpoint with a sample request, please see `tests/integration/test_mergescore_api.py`
+
+3. Invoke the tool via:
+
+```python
+from langchain_summarymerge_score import SummaryMergeScoreTool
+
+summary_merger = SummaryMergeScoreTool(
+    api_base="http://localhost:8000/merge_summaries"
+)
+
+summaries = {
+            "summaries": {
+                "chunk_0": "text1",
+                "chunk_1": "text2"
+                }
+            }
+
+output = summary_merger.invoke({"summaries": summaries})
+```
+
+## Using the tool (SummaryMergeScore) via tool invokation
+
+```python
+from langchain_summarymerge_score import SummaryMergeScoreTool
+
+summary_merger = SummaryMergeScoreTool(
+    model_id="llmware/llama-3.2-3b-instruct-ov",
+    device="GPU"
+)
+
+summaries = {
+            "summaries": {
+                "chunk_0": "text1",
+                "chunk_1": "text2"
+                }
+            }
+
+output = summary_merger.invoke({"summaries": summaries})
+```
