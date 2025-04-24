@@ -72,7 +72,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if not args.endpoint_uri == "" and not args.endpoint_port:
-        print("FastAPI server running on default uri:port. ")
+        print("FastAPI server running on default localhost:8000.")
 
     summary_merger = SummaryMergeScoreTool(
         model_id=args.model_id,
