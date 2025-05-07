@@ -32,41 +32,70 @@ class SummaryMergeScoreTool(BaseTool):  # type: ignore[override]
     """SummaryMergeScore tool.
 
     Setup:
-        # TODO: Replace with relevant packages, env vars.
-        Install ``langchain-summarymerge-score`` and set environment variable ``SUMMARYMERGESCORE_API_KEY``.
+        Install ``langchain-summarymerge-score``.
 
         .. code-block:: bash
 
             pip install -U langchain-summarymerge-score
-            export SUMMARYMERGESCORE_API_KEY="your-api-key"
+            Set HF_ACCESS_TOKEN via `export HF_ACCESS_TOKEN=<YOUR_ACCESS_TOKEN>`
 
     Instantiation:
         .. code-block:: python
+            from langchain_summarymerge_score import SummaryMergeScoreTool
 
             tool = SummaryMergeScoreTool(
-                # TODO: init params
+                model_id="llmware/llama-3.2-3b-instruct-ov",
+                device="GPU",
+                max_new_tokens=512,
+                batch_size=5,
             )
 
     Invocation with args:
         .. code-block:: python
 
-            # TODO: invoke args
-            tool.invoke({...})
+            summaries = {
+            "summaries": {
+                "chunk_0": "text1",
+                "chunk_1": "text2"
+                }
+            }
+
+            output = tool.invoke({"summaries": summaries})
 
         .. code-block:: python
 
-            # TODO: output of invocation
+            {"overall_summary": "Merged summary text", "anomaly_score": 0.5}            
 
-    Invocation with ToolCall:
+    Invocation with local endpoint server:
+    The SummaryMergeScore tool is also available via a local FastAPI server. 
+
+    To use the tool via local FastAPI endpoints:
+
+    1. Ensure your endpoint server is up and running (example: a FastAPI based server hosting your model of choice). Lets say it is hosted at: `http://localhost:8000/merge_summaries`
+
+    2. Invoke the tool via:
 
         .. code-block:: python
 
-            # TODO: invoke args
-            tool.invoke({"args": {...}, "id": "1", "name": tool.name, "type": "tool_call"})
+            from langchain_summarymerge_score import SummaryMergeScoreTool
+
+            summary_merger = SummaryMergeScoreTool(
+                api_base="http://localhost:8000/merge_summaries"
+            )
+
+            summaries = {
+                "summaries": {
+                    "chunk_0": "text1",
+                    "chunk_1": "text2"
+                    }
+            }
+
+            output = summary_merger.invoke({"summaries": summaries})
 
         .. code-block:: python
 
-            # TODO: output of invocation
+            {"overall_summary": "Merged summary text", "anomaly_score": 0.5}
+            
     """  # noqa: E501
 
     name: str = "Summary Merge Score Tool"

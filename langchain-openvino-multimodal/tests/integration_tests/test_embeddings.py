@@ -1,9 +1,11 @@
 """Test OpenvinoClip embeddings."""
-from langchain_openvino_clip.embeddings import OpenVINOClipEmbeddings
+from langchain_openvino_multimodal import OpenVINOClipEmbeddings, OpenVINOBgeEmbeddings
 from PIL import Image
 import numpy as np
 
 if __name__ == "__main__":
+    
+    # Test OpenVINO CLIP Embeddings
     image_1_path = "cats.jpg"
     image_2_path = "mountain.jpg"
     
@@ -40,6 +42,17 @@ if __name__ == "__main__":
     assert np.array_equal(image_embeddings_arr[0], image_embeddings[0]), "Cat Image embeddings do not match"   
     assert np.array_equal(image_embeddings_arr[1], image_embeddings[1]), "Mountain Image embeddings do not match" 
     
-
+    # Test OpenVINO BGE Embeddings
+    model_name = "BAAI/bge-small-en"
+    model_kwargs = {"device": "CPU"}
+    encode_kwargs = {"normalize_embeddings": True}
+    ov_embeddings = OpenVINOBgeEmbeddings(
+        model_name_or_path=model_name,
+        model_kwargs=model_kwargs,
+        encode_kwargs=encode_kwargs,
+    )
+    embedding = ov_embeddings.embed_query("hi this is harrison")
+    print(f"Embedding shape: {len(embedding)}")
+    assert len(embedding) == 384, "Embedding length is not 384"
 
 
