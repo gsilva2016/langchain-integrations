@@ -482,7 +482,7 @@ class OpenVINOBlipEmbeddings(Embeddings):
         image = Image.open(requests.get(url, stream=True).raw)
 
         text = "A woman and a dog sitting on a beach"
-        inputs = self.processor(image, text, return_tensors="pt")
+        inputs = self.processor(image, text, truncation=True, return_tensors="pt")
                 
         ov_vision_proj_model = Path(ov_vision_proj_model)
         ov_text_proj_model = Path(ov_text_proj_model)
