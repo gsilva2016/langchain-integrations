@@ -1,9 +1,8 @@
 from langchain_summarymerge_score import SummaryMergeScoreTool
 
 def test_summary_merge_score_tool_endpoint():
-    summary_merger = SummaryMergeScoreTool(
-        api_base="http://localhost:8000/merge_summaries"
-        )
+    # Ensure the endpoint is running and accessible (OVMS)
+    summary_merger = SummaryMergeScoreTool(api_base="http://localhost:8013/v3/chat/completions", device="GPU")
 
     summaries = {
             "chunk_0": "Start time: 0 End time: 30\n**Overall Summary**\nThe video captures a sequence of moments inside a "
@@ -39,9 +38,8 @@ def test_summary_merge_score_tool_endpoint():
     assert "anomaly_score" in output
 
 def test_summary_merge_score_tool_model_id():
-    summary_merger = SummaryMergeScoreTool(
-        model_id="llmware/llama-3.2-3b-instruct-ov",
-        device="GPU")
+    # Ensure model dir is present and has the OV optimized files from optimum-cli command
+    summary_merger = SummaryMergeScoreTool(model_id="<replace with path to model dir>", device="GPU")
 
     summaries = {
             "chunk_0": "Start time: 0 End time: 30\n**Overall Summary**\nThe video captures a sequence of moments inside a "
