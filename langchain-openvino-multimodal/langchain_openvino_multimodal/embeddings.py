@@ -519,6 +519,8 @@ class OpenVINOBlipEmbeddings(Embeddings):
         self.ov_vision_proj = core.compile_model(ov_vision_proj_model, self.ov_vision_device)
         self.ov_text_proj = core.compile_model(ov_text_proj_model, self.ov_text_device)
 
+        print(f"{self.model_id} model initialized with vision device: {self.ov_vision_device}, text device: {self.ov_text_device}")
+
     def embed_documents(self, texts: List[str]) -> List[List[float]]:
         """Embed texts."""
         text_embeddings = []
