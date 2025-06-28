@@ -79,5 +79,6 @@ if __name__ == "__main__":
     embedding = ov_embeddings.embed_query("hi this is harrison")
     print(f"Embedding shape: {len(embedding)}")
     assert len(embedding) == 384, "Embedding length is not 384"
+    print("All tests for BGE embeddings passed.")
 
 

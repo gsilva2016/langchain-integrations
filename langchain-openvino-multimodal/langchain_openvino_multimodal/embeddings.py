@@ -466,7 +466,7 @@ class OpenVINOBlipEmbeddings(Embeddings):
         if "blip-itm-base-coco" not in model_id:
             raise ValueError("Only BLIP ITM COCO model is currently supported.")
         
-        print("langchain-openvino-multimodal: If you are using a new device for inference, please ensure old models are deleted.")
+        print("langchain-openvino-multimodal-BLIP: If you are using a new device for inference, please ensure old models are deleted.")
         
         self.ov_vision_device = ov_vision_device
         self.ov_text_device = ov_text_device
@@ -475,7 +475,7 @@ class OpenVINOBlipEmbeddings(Embeddings):
             raise ValueError("NPU device is not supported for text embedding.")
         
         self.model = BlipForImageTextRetrieval.from_pretrained(model_id)
-        self.processor = BlipProcessor.from_pretrained(model_id)
+        self.processor = BlipProcessor.from_pretrained(model_id, use_fast=True)
 
         self.model.eval()
         
@@ -648,7 +648,7 @@ class OpenVINOClipEmbeddings(Embeddings):
         if "clip-vit-base-patch32" not in model_id:
             raise ValueError("Only CLIP VIT-32 model is currently supported.")
         
-        print("If you are using a new device for inference, please ensure old models are deleted.")
+        print("langchain-openvino-multimodal-CLIP: If you are using a new device for inference, please ensure old models are deleted.")
 
         self.device = device
         self.model = CLIPModel.from_pretrained(model_id)
